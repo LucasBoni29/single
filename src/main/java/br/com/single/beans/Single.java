@@ -2,6 +2,8 @@ package br.com.single.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,13 +13,16 @@ public class Single {
 	
 	@Id
 	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	@Column(name="nome", length=60)
 	private String nome;
-	@Column(name="patente")
+	@Column(name="patente", length=50)
 	private String patente;
 	@Column(name="nivel")
 	private double nivel;
+	@Column(name="descricao", length=200)
+	private String descricao;
 	
 	public int getId() {
 		return id;
@@ -42,6 +47,12 @@ public class Single {
 	}
 	public void setNivel(double nivel) {
 		this.nivel = nivel;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	
 	

@@ -1,10 +1,14 @@
 package br.com.single.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.single.beans.Single;
@@ -16,12 +20,32 @@ public class SingleController {
 	@Autowired //Criando o objeto automaticamente.
 	private SingleDAO dao;
 	
+	//método para achar todos os dados do BD.
 	@GetMapping("/single")
 	public ResponseEntity<List<Single>> getAll(){ 
 		
 		List<Single> list = (List<Single>)dao.findAll();
+		if(list.size()==0) {
+			return ResponseEntity.status(404).build();
+		}
 		return ResponseEntity.ok(list);
 		
 	}
+	//método para achar os dados pelo ID.
+	@GetMapping("/single/{id}")
+	public Optional<Single> findById(@PathVariable(value = "id")int id){
+		return dao.findById(id);
+	}
 	
+	//método para inserir os dados no BD.
+	@PostMapping("/wolf")
+	public ResponseEntity<Single> addSingle(@RequestBody Single objeto){
+		try {
+			dao.save(objeto);
+			return ResponseEntity.ok(objeto);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(403).build();
+		}
+	}
 }
