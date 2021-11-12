@@ -33,8 +33,13 @@ public class SingleController {
 	}
 	//método para achar os dados pelo ID.
 	@GetMapping("/single/{id}")
-	public Optional<Single> findById(@PathVariable(value = "id")int id){
-		return dao.findById(id);
+	public ResponseEntity<Single> getSingle(@PathVariable int id){
+		Single resp = dao.findById(id).orElse(null);
+		
+		if(resp == null) {
+			return ResponseEntity.status(404).build();
+		}
+		return ResponseEntity.ok(resp);
 	}
 	
 	//método para inserir os dados no BD.
@@ -47,5 +52,14 @@ public class SingleController {
 			e.printStackTrace();
 			return ResponseEntity.status(403).build();
 		}
+	}
+	//método para criar a rota de login
+	@PostMapping("/login")
+	public ResponseEntity<Single> logar(@RequestBody Single objeto){
+		Single resp = dao.findByPatenteAndNome(objeto.getPatente(), objeto.getNome());
+		if(resp == null) {
+			return ResponseEntity.status(404).build();
+		}
+		return ResponseEntity.ok(resp);
 	}
 }

@@ -5,5 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import br.com.single.beans.Single;
 
 public interface SingleDAO extends CrudRepository<Single, Integer>{
-
+	
+	Single findByPatenteAndNome(String patente, String nome);
 }
