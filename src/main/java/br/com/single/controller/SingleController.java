@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.single.beans.Single;
 import br.com.single.dao.SingleDAO;
 
-@RestController
+@Controller
 public class SingleController {
 	
 	@Autowired //Criando o objeto automaticamente.
 	private SingleDAO dao;
+	
+	@GetMapping("/home")
+	public String home() {
+		return "home";
+	}
 	
 	//método para achar todos os dados do BD.
 	@GetMapping("/single")
